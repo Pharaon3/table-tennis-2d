@@ -149,10 +149,10 @@ function load() {
   isGoal = 0;
   setTimer = 1;
   countdown();
-
+  toggleViewMode();
   const urlParams = new URLSearchParams(window.location.search);
   const eventId = Number(urlParams.get("eventId"));
-  document.getElementById('link').setAttribute('href', '../table-tennis-2d/index.html?eventId=' + eventId)
+  document.getElementById('link').setAttribute('href', '../table-tennis-3d/index.html?eventId=' + eventId);
 
   socket = new WebSocket("wss://gamecast.betdata.pro:8443");
   socket.onopen = function (e) {
@@ -1363,4 +1363,20 @@ function whoserve() {
   // ((homescore + awayscore) / 2 + gameperiod) % 2 == 1 home
   // ((homescore + awayscore) / 2 + gameperiod) % 2 == 0 away
   return (Math.floor((gameCount) / 2) + currentPeriod) % 2;
+}
+function toggleViewMode(){
+  if(viewMode == 2){
+    viewMode = 3;
+    $("#pitchImage").attr("href", './media/table3d.png')
+    $("#viewMode").text("2D")
+    $("#homeStateG").attr("transform", "translate(50, 380)")
+    $("#awayStateG").attr("transform", "translate(690, 150)")
+  } 
+  else{
+    viewMode = 2;
+    $("#pitchImage").attr("href", './media/table2d.png')
+    $("#viewMode").text("3D")
+    $("#homeStateG").attr("transform", "translate(80, 410)")
+    $("#awayStateG").attr("transform", "translate(720, 170)")
+  }
 }
